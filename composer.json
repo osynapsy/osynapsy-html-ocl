@@ -1,7 +1,7 @@
 {
-    "name": "osynapsy.net/osynapsy-ocl",
+    "name": "osynapsy.net/osynapsy-html-ocl",
     "version": "0.9",
-    "homepage": "http://www.osynapsy.net/ocl",
+    "homepage": "http://www.osynapsy.net/html-ocl",
     "type": "library",
     "description": "Osynapsy base components library",
     "keywords": ["Osynapsy", "Components library"],
@@ -10,7 +10,7 @@
         {
             "name": "Pietro Celeste",
             "email": "p.celeste@osynapsy.net",
-            "homepage": "https://github.com/osynapsy/osynapsy-ocl/wiki"
+            "homepage": "https://github.com/osynapsy/osynapsy-html-ocl/wiki"
         }
     ],
     "require": {
