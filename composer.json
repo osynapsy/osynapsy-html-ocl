@@ -19,7 +19,7 @@
     },
     "autoload" : {
         "psr-4": {
-            "Osynapsy\\Ocl\\": "lib/"
+            "Osynapsy\\Ocl\\": "src/"
         }
     }
 }
