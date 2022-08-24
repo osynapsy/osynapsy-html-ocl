@@ -13,8 +13,6 @@ namespace Osynapsy\Ocl;
 
 use Osynapsy\Html\Tag;
 use Osynapsy\Html\Component;
-use Osynapsy\Html\Ocl\HiddenBox;
-use Osynapsy\Data\Tree;
 
 /**
  * Description of TreeBox
@@ -46,8 +44,8 @@ class TreeBox extends Component
         $this->add(new HiddenBox("{$id}_sel"))->setClass('selectedNode');
         $this->add(new HiddenBox("{$id}_opn"))->setClass('openNodes');
         $this->setClass('osy-treebox');
-        $this->requireJs('Ocl/TreeBox/script.js');
-        $this->requireCss('Ocl/TreeBox/style.css');
+        $this->requireJs('assets/Ocl/TreeBox/script.js');
+        $this->requireCss('assets/Ocl/TreeBox/style.css');
     }
 
     protected function __build_extra__()
