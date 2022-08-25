@@ -15,7 +15,7 @@
     ],
     "require": {
         "php" : ">=7.2.0",
-        "osynapsy.net/osynapsy-html" : "1.0"
+        "osynapsy/osynapsy-html" : "1.0"
     },
     "autoload" : {
         "psr-4": {
