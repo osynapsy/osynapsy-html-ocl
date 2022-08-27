@@ -13,8 +13,9 @@ namespace Osynapsy\Ocl;
 
 class Submit extends Button
 {
-    public function __construct($name,$id=null)
+    public function __construct($id, $label = '', $class = '')
     {
-        parent::__construct($name, $this->nvl($id, $name), 'submit');
+        parent::__construct($id, $label, $class);
+        $this->att('type', 'submit');
     }
 }
