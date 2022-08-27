@@ -18,34 +18,32 @@ class CheckBox extends Component
 {
     private $checkbox = null;
 
-    public function __construct($name, $tag = 'span', $value = '1')
+    public function __construct($id, $tag = 'span', $value = '1')
     {
-        parent::__construct($tag, $name);
-        $this->add($this->hiddenFieldFactory($name));
-        $this->checkbox = $this->add($this->checkboxFactory($name, $value));
+        parent::__construct($tag, sprintf('%s_container', $id));
+        $this->checkbox = $this->checkboxFactory($id, $value);
     }
 
-    protected function hiddenFieldFactory($name)
+    protected function checkboxFactory($id, $value)
     {
-        return sprintf('<input type="hidden" name="%name" value="0">', $name);
-    }
-
-
-    protected function checkboxFactory($name, $value)
-    {
-        $checkbox = new Tag('input', $name, 'osy-check');
-        $checkbox->att([
-            'type' => 'checkbox',
-            'name' => $name,
-            'value' => $value
-        ]);
+        $checkbox = new Tag('input', $id);
+        $checkbox->att(['type' => 'checkbox', 'name' => $id, 'value' => $value]);
+        return $checkbox;
     }
 
     protected function __build_extra__()
     {
-        if (!empty($_REQUEST[$this->id])) {
+        $checkBoxId = $this->getCheckbox()->getAttribute('id');
+        if (!empty($_REQUEST[$checkBoxId])) {
             $this->getCheckbox()->att('checked','checked');
         }
+        $this->add($this->hiddenFieldFactory($checkBoxId));
+        $this->add((string) $this->getCheckbox());
+    }
+
+    protected function hiddenFieldFactory($name)
+    {
+        return sprintf('<input type="hidden" name="%s" value="0">', $name);
     }
 
     public function getCheckbox()
@@ -53,7 +51,7 @@ class CheckBox extends Component
         return $this->checkbox;
     }
 
-    public function setDisabled($condition): \this
+    public function setDisabled($condition)
     {
         if ($condition) {
             $this->getCheckbox()->att('disabled', 'disabled');
