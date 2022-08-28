@@ -11,11 +11,13 @@
 
 namespace Osynapsy\Ocl;
 
-//Field hidden
 class HiddenBox extends InputBox
 {
-    public function __construct($name, $id = null)
+    public function __construct($name, $id = null, $class = '')
     {
         parent::__construct('hidden', $name, $id ?? $name);
+        if (!empty($class)) {
+            $this->setClass($class);
+        }
     }
 }
