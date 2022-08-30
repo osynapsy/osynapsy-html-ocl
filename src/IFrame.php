@@ -13,24 +13,15 @@ namespace Osynapsy\Ocl;
 
 use Osynapsy\Html\Component;
 
-//Field iframe
+//Component iframe
 class IFrame extends Component
 {
     public function __construct($name, $source = null)
     {
-        parent::__construct('iframe',$name);
+        parent::__construct('iframe', $name);
         $this->att('name',$name);
-        $this->att('src', $source);
-    }
-
-    protected function __build_extra__()
-    {
-        /*$src = $this->getParameter('src');
-        if (!array_key_exists($this->id,$_REQUEST) && !empty($src)){
-            $_REQUEST[$this->id] = $src;
+        if (!empty($source)) {
+            $this->att('src', $source);
         }
-        if(array_key_exists($this->id,$_REQUEST) && !empty($_REQUEST[$this->id])){
-            $this->att('src',$_REQUEST[$this->id]);
-        }*/
     }
 }
