@@ -17,11 +17,13 @@ use Osynapsy\Html\Tag;
 class CheckBox extends Component
 {
     private $checkbox = null;
+    private $label;
 
-    public function __construct($id, $tag = 'span', $value = '1')
+    public function __construct($id, $tag = 'span', $value = '1', $label = '')
     {
-        parent::__construct($tag, sprintf('%s_container', $id));
+        parent::__construct($tag, $id.'_container');
         $this->checkbox = $this->checkboxFactory($id, $value);
+        $this->label = $label;
     }
 
     protected function checkboxFactory($id, $value)
@@ -34,11 +36,16 @@ class CheckBox extends Component
     protected function __build_extra__()
     {
         $checkBoxId = $this->getCheckbox()->getAttribute('id');
-        if (!empty($_REQUEST[$checkBoxId])) {
-            $this->getCheckbox()->att('checked','checked');
+        if (!empty($_REQUEST[$checkBoxId]) && !is_array($_REQUEST[$checkBoxId])) {
+            $this->getCheckbox()->att('checked', 'checked');
         }
-        $this->add($this->hiddenFieldFactory($checkBoxId));
-        $this->add((string) $this->getCheckbox());
+        if (strpos($this->getCheckbox()->name, '[') === false) {
+            $this->add($this->hiddenFieldFactory($checkBoxId));
+        }
+        $this->add($this->getCheckbox());
+        if (!empty($this->label)) {
+            $this->add(sprintf('&nbsp;%s',$this->label));
+        }
     }
 
     protected function hiddenFieldFactory($name)
