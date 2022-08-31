@@ -13,8 +13,8 @@ namespace Osynapsy\Ocl;
 
 use Osynapsy\Html\Tag;
 use Osynapsy\Html\Component;
-use Osynapsy\Html\Ocl\HiddenBox;
-use Osynapsy\Data\Tree;
+use Osynapsy\Ocl\HiddenBox;
+use Osynapsy\DataStructure\Tree;
 
 /**
  * Description of TreeBox
