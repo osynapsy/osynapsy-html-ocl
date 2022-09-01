@@ -24,6 +24,8 @@ use Osynapsy\DataStructure\Tree;
 class TreeBox2 extends Component
 {
     private $nodeOpenIds = [];
+    private $refreshOnClick = [];
+    private $refreshOnOpen = [];
     private $dataTree;
 
     const CLASS_SELECTED_LABEL = 'osy-treebox-label-selected';
@@ -44,46 +46,79 @@ class TreeBox2 extends Component
     protected function __build_extra__(): void
     {
         foreach ($this->dataTree->get() as $node) {
-            $this->add($this->node($node));
+            $this->add($this->nodeFactory($node));
+        }
+        if (!empty($this->refreshOnClick)) {
+            $this->att('data-refresh-on-click', implode(',', $this->refreshOnClick));
+        }
+        if (!empty($this->refreshOnOpen)) {
+            $this->att('data-refresh-on-open', implode(',', $this->refreshOnOpen));
         }
     }
 
-    protected function branch($item, $icons) : Tag
-    {
-        $branch = new Tag('div', null, 'osy-treebox-branch');
-        $head   = $branch->add(new Tag('div', null, 'osy-treebox-node-head'));
-        $head->add($this->icon($item, $icons));
-        $head->add(new Tag('span', '', 'osy-treebox-node-label'))
-             ->add($item[1]);
-        $branchBody = $branch->add(
-            new Tag('div', null, 'osy-treebox-branch-body')
-        );
-        if (!in_array($item[0], $this->nodeOpenIds) && ($item[3] != '1')) {
-            $branchBody->addClass('d-none');
-        }
-        foreach ($item['_childrens'] as $node) {
-            $branchBody->add($this->node($node, $icons));
-        }
-        return $branch;
-    }
-
-    protected function leaf($item, $icons) : Tag
-    {
-       $leaf = new Tag('div', null, 'osy-treebox-leaf');
-       $leaf->add($this->icon($item, $icons));
-       $leaf->add(new Tag('span', null, 'osy-treebox-node-label'))->add($item[1]);
-       return $leaf;
-    }
-
-    protected function node($item, $icons = []) : Tag
+    protected function nodeFactory($item, $icons = []) : Tag
     {
         if ($item['_level'] > -1){
             $icons[$item['_level']] = $item['_position'] === Tree::POSITION_END ? self::ICON_NODE_CONNECTOR_EMPTY: self::ICON_NODE_CONNECTOR_LINE;
         }
-        return empty($item['_childrens']) ? $this->leaf($item, $icons) : $this->branch($item, $icons);
+        return empty($item['_childrens']) ? $this->leafFactory($item, $icons) : $this->branchFactory($item, $icons);
     }
 
-    private function icon($node, $icons = [])
+    protected function leafFactory($item, $icons) : Tag
+    {
+       $leaf = new Tag('div', null, 'osy-treebox-leaf');
+       if (!empty($this->refreshOnClick)) {
+           $leaf->addClass('osy-treebox-node');
+           $leaf->att(['data-level' => $item['_level'], 'data-node-id' => $item[0]]);
+       }
+       $leaf->add($this->iconFactory($item, $icons));
+       $leaf->add(new Tag('span', null, 'osy-treebox-node-label'))->add(new Tag('span', null, 'osy-treebox-label'))->add($item[1]);
+       if (count($item) > 4) {
+           $leaf->add($this->commandFactory($item));
+       }
+       return $leaf;
+    }
+
+    protected function branchFactory($item, $icons) : Tag
+    {
+        $branch = new Tag('div', null, 'osy-treebox-branch');
+        if (!empty($this->refreshOnClick)) {
+            $branch->addClass('osy-treebox-node');
+            $branch->att(['data-level' => $item['_level'], 'data-node-id' => $item[0]]);
+        }
+        $branch->add($this->branchHeadFactory($item, $icons));
+        $branch->add($this->branchBodyFactory($item, $icons));
+        return $branch;
+    }
+
+    protected function branchHeadFactory($item, $icons)
+    {
+        $head = new Tag('div', null, 'osy-treebox-node-head');
+        $head->add($this->iconFactory($item, $icons));
+        $label = $head->add(new Tag('span', '', 'osy-treebox-node-label'));
+        $label->add($item[1]);
+        if (!empty($this->refreshOnClick)) {
+           $label->addClass('osy-treebox-label');
+        }
+        if (count($item) > 4) {
+           $label->add($this->commandFactory($item));
+       }
+        return $head;
+    }
+
+    protected function branchBodyFactory($item, $icons)
+    {
+        $branchBody = new Tag('div', null, 'osy-treebox-branch-body');
+        if (!in_array($item[0], $this->nodeOpenIds) && ($item[3] != '1')) {
+            $branchBody->addClass('d-none');
+        }
+        foreach ($item['_childrens'] as $node) {
+            $branchBody->add($this->nodeFactory($node, $icons));
+        }
+        return $branchBody;
+    }
+
+    private function iconFactory($node, $icons = [])
     {
         $class = "osy-treebox-branch-command tree-plus-".(!empty($node['_level']) && $node['_position'] === Tree::POSITION_BEGIN ? Tree::POSITION_BETWEEN : $node['_position']);
         if (empty($node['_childrens'])){
@@ -94,6 +129,38 @@ class TreeBox2 extends Component
         //Sovrascrivo l'ultima icona con il l'icona/segmento corrispondente al comando / posizione
         $icons[$node['_level']] = sprintf('<span class="tree %s">&nbsp;</span>', $class);
         return implode('',$icons);
+    }
+
+    private function commandFactory($node)
+    {
+        $dummy = new Tag('dummy');
+        if (count($node) < 4){
+            return $dummy;
+        }
+        foreach($node as $i => $command) {
+            if ($i <= 3 || empty($command) || !is_int($i)) {
+                continue;
+            }
+            $dummy->add(new Tag('span', null, 'osy-treebox-node-command'))->add($command);
+        }
+        return $dummy;
+    }
+
+    public function getPath()
+    {
+        return $this->pathSelected;
+    }
+
+    public function onClickRefresh($componentId)
+    {
+        $this->refreshOnClick[] = $componentId;
+        return $this;
+    }
+
+    public function onOpenRefresh($componentId)
+    {
+        $this->refreshOnOpen[] = $componentId;
+        return $this;
     }
 
     public function setData($data, $keyId = 0, $keyParentId = 2, $keyIsOpen = 3)
