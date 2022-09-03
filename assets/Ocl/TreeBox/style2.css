@@ -10,7 +10,7 @@
 
 span.osy-treebox-label, span.osy-treebox-node-label {
     font-weight: normal;
-    font-size: 0.9em;    
+    font-size: 0.9em;
     margin-bottom: 0px;
 }
 span.osy-treebox-label:hover {
@@ -22,7 +22,7 @@ div.osy-treebox span.tree {
     /*margin-right: 3px;*/
     background-repeat: no-repeat;
     line-height: 20px;
-    width: 16px; 
+    width: 16px;
     padding: 0px;
 }
 
@@ -71,7 +71,7 @@ div.osy-treebox span.tree-con-4 {
     background-image: url(tree.set.png);
     background-position: 0 -124px;
 }
-div.osy-treebox-node-label:hover,
+div.osy-treebox-node-head:hover,
 div.osy-treebox-leaf:hover {
     background-color: #eee;
 }
@@ -82,16 +82,16 @@ span.osy-treebox-label-selected {
 span.osy-treebox-node-command {
     float: right;
     font-size: 0.8em;
-    padding: 3px 3px 0px 3px; 
+    padding: 3px 3px 0px 3px;
     text-decoration: none !important;
     visibility: hidden;
 }
-div.osy-treebox-node-label:hover span.osy-treebox-node-command,
+div.osy-treebox-node-head:hover span.osy-treebox-node-command,
 div.osy-treebox-leaf:hover span.osy-treebox-node-command {
     visibility: visible;
 }
 
-div.osy-treebox-node-label, 
+div.osy-treebox-node-label,
 div.osy-treebox-node-head,
 .osy-treebox-leaf {
     height: 20px;

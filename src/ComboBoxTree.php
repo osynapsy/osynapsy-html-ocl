@@ -22,7 +22,6 @@ class ComboBoxTree extends ComboBox
 
     protected function __build_extra__()
     {
-        $this->addClass('form-control');
         $this->requestValue = $this->getRequestValue();
         if (!$this->getParameter('option-select-disable')){
             array_unshift($this->data, $this->placeholder);

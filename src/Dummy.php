@@ -17,6 +17,5 @@ class Dummy extends Component
     public function __construct($name, $tag = 'div')
     {
         parent::__construct($tag, $name);
-        $this->att('class', 'osy-dummy');
     }
 }

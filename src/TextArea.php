@@ -17,7 +17,7 @@ class TextArea extends Component
 {
     public function __construct($name)
     {
-        parent::__construct('textarea',$name);
+        parent::__construct('textarea', $name);
         $this->name = $name;
     }
 

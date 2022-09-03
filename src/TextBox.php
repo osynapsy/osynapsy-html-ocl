@@ -16,16 +16,6 @@ class TextBox extends InputBox
     public function __construct($name, $id = null)
     {
         parent::__construct('text', $name, $id ?? $name);
-        $this->setParameter('get-request-value', $name);
-    }
-
-    protected function __build_extra__()
-    {
-        parent::__build_extra__();
-        if ($this->getParameter('field-control') == 'is_number'){
-            $this->att('type','number');
-            $this->setClass('right osy-number');
-        }
     }
 
     public function onTyping($jsCode)

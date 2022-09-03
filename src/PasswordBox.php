@@ -18,4 +18,9 @@ class PasswordBox extends InputBox
         parent::__construct('password', $name, parent::nvl($id, $name));
         $this->att('autocomplete','off');
     }
+
+    public function setAction($action, $parameters = null, $class = 'change-execute', $confirmMessage = null)
+    {
+        return parent::setAction($action, $parameters, $class, $confirmMessage);
+    }
 }

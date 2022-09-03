@@ -153,7 +153,7 @@ class TreeBox extends Component
             return $dummy;
         }
         foreach($node as $i => $command) {
-            if ($i > 2) {
+            if ($i > 2 && !empty($command)) {
                 $dummy->add(new Tag('span', null, 'osy-treebox-node-command'))
                        ->add($command);
             }

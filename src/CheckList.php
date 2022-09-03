@@ -16,37 +16,44 @@ use Osynapsy\Html\Component;
 
 class CheckList extends Component
 {
-    private $table = null;
-    private $groups = [];
+    private $parents = [];
 
     public function __construct($name)
     {
-        parent::__construct('div',$name);
-        $this->att('class','osy-check-list');
+        parent::__construct('div', $name);
+        $this->setClass('ocl-checklist');
     }
 
     protected function __build_extra__()
     {
-        $this->table =  $this->add(new Tag('table'));
+        $requestValues = $_REQUEST[$this->id] ?? [];
         foreach ($this->data as $value) {
+            $value[2] = in_array($value[0], $requestValues) ? true : false;
             $this->rowFactory($value);
         }
     }
 
     protected function rowFactory($value, $level = 0)
     {
-        $tr = $this->table->add(new Tag('tr'));
-        if (!empty($_REQUEST[$this->id]) && is_array($_REQUEST[$this->id]) && in_array($value[0], $_REQUEST[$this->id])) {
-            $value[2] = true;
+
+        $tr = $this->add(new Tag('div', null, 'ocl-checklist-row'));
+        $tr->add(str_repeat('&nbsp;', $level * 7));
+        $tr->add($this->checkBoxFactory($value));
+        if (!empty($this->parents[$value[0]])) {
+            foreach($this->parents[$value[0]] as $value) {
+               $tr->add($this->rowFactory($value, $level + 1));
+            }
         }
-        $tr->add(new Tag('td'))
-           ->add(str_repeat('&nbsp;', $level * 7).'<input type="checkbox" class="i-checks checkbox" name="'.$this->id.'[]" value="'.$value[0].'"'.(!empty($value[2]) ? ' checked' : '').'>&nbsp;'.$value[1]);
-        if (empty($this->groups[$value[0]])) {
-            return;
+        return $tr;
+    }
+
+    protected function checkBoxFactory($value)
+    {
+        $CheckBox = new CheckBox(sprintf('%s[]', $this->id), 'span', $value[0], $value[1]);
+        if (!empty($value[2])) {
+           $CheckBox->getCheckbox()->att('checked', 'checked');
         }
-        foreach($this->groups[$value[0]] as $value) {
-            $this->rowFactory($value, $level + 1);
-        }
+        return $CheckBox;
     }
 
     public function setData($data)
@@ -55,10 +62,10 @@ class CheckList extends Component
             return;
         }
         foreach($data as $rec) {
-            if (empty($rec['_group'])) {
-                $this->data[] = array_values($rec);
+            if (empty($rec['parent'])) {
+                $this->data[] = array_slice(array_values($rec), 0 ,2);
             } else {
-                $this->groups[$rec['_group']][] = $rec;
+                $this->parents[$rec['parent']][] = $rec;
             }
         }
     }
