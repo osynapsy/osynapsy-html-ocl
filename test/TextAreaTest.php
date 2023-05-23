@@ -36,4 +36,3 @@ final class TextAreaTest extends TestCase
         );
     }
 }
-
