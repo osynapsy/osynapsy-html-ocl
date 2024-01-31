@@ -24,7 +24,7 @@ class ComboBox extends Component
     public function __construct($name)
     {
         parent::__construct('select', $name);
-        $this->att('name', $name);
+        $this->attribute('name', $name);
     }
 
     protected function __build_extra__()
@@ -52,13 +52,13 @@ class ComboBox extends Component
 
     protected function optionFactory($value, $label, $disabled = 0)
     {
-        $option = (new Tag('option'))->att('value', $value);
+        $option = (new Tag('option'))->attribute('value', $value);
         $option->add($this->nvl($label, $value));
         if ($disabled) {
-            $this->att('disabled','disabled');
+            $this->attribute('disabled','disabled');
         }
         if ($this->requestValue == $value) {
-            $option->att('selected', 'selected');
+            $option->attribute('selected', 'selected');
         }
         if (empty($this->getAttribute('readonly')) || !empty($option->getAttribute('selected'))) {
             $this->add($option);

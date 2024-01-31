@@ -19,9 +19,9 @@ class IFrame extends Component
     public function __construct($name, $source = null)
     {
         parent::__construct('iframe', $name);
-        $this->att('name',$name);
+        $this->attribute('name',$name);
         if (!empty($source)) {
-            $this->att('src', $source);
+            $this->attribute('src', $source);
         }
     }
 }

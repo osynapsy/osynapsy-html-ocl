@@ -51,7 +51,7 @@ class CheckList extends Component
     {
         $CheckBox = new CheckBox(sprintf('%s[]', $this->id), 'span', $value[0], $value[1]);
         if (!empty($value[2])) {
-           $CheckBox->getCheckbox()->att('checked', 'checked');
+           $CheckBox->getCheckbox()->attribute('checked', 'checked');
         }
         return $CheckBox;
     }

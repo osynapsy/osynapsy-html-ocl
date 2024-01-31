@@ -22,7 +22,7 @@ class RadioList extends Component
     public function __construct($name, $prefix = null)
     {
         parent::__construct('div', $name);
-        $this->att('class','osy-bcl-radio-list');
+        $this->attribute('class','osy-bcl-radio-list');
         $this->prefix = $prefix;
     }
 
@@ -54,7 +54,7 @@ class RadioList extends Component
     protected function buildRadio($rec)
     {
         $radio = new RadioBox($this->id, $rec[1] ?? '');
-        $radio->att('value',$rec[0]);
+        $radio->attribute('value',$rec[0]);
         return $radio;
     }
 }

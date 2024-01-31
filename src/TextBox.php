@@ -20,12 +20,12 @@ class TextBox extends InputBox
 
     public function onTyping($jsCode)
     {
-        return $this->setClass('typing-execute')->att('ontyping', $jsCode);
+        return $this->setClass('typing-execute')->attribute('ontyping', $jsCode);
     }
 
     public function onDblClick($jsCode)
     {
-        return $this->att('ondblclick', $jsCode);
+        return $this->attribute('ondblclick', $jsCode);
     }
 
     public function setAction($action, $parameters = null, $class = 'change-execute', $confirmMessage = null)

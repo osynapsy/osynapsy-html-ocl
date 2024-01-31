@@ -19,7 +19,7 @@ class Tab extends Component
     public function __construct($name)
     {
         parent::__construct('div', $name);
-        $this->att('class', 'tabs');
+        $this->attribute('class', 'tabs');
         $this->add(new HiddenBox($name));
     }
 

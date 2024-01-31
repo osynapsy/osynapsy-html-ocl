@@ -20,8 +20,8 @@ class Button extends Component
     public function __construct($id = null, $label = '', $class = '')
     {
         parent::__construct('button', $id);
-        $this->att('name', $id);
-        $this->att('type', 'button');
+        $this->attribute('name', $id);
+        $this->attribute('type', 'button');
         $this->add($label);
         if (!empty($class)) {
             $this->setClass($class);

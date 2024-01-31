@@ -29,7 +29,7 @@ class RadioBox extends Component
     protected function radioFactory($id, $value)
     {
         $radio = new Tag('input', $id);
-        $radio->att([
+        $radio->attribute([
             'type' => 'radio',
             'name' => $id,
             'value' => $value
@@ -40,7 +40,7 @@ class RadioBox extends Component
     public function __build_extra__()
     {
         if ($this->isChecked()) {
-            $this->getRadio()->att('checked','checked');
+            $this->getRadio()->attribute('checked','checked');
         }
         $this->add($this->getRadio());
         if (!empty($this->label)) {
@@ -67,7 +67,7 @@ class RadioBox extends Component
     public function setDisabled($condition)
     {
         if ($condition) {
-            $this->getRadio()->att('disabled', 'disabled');
+            $this->getRadio()->attribute('disabled', 'disabled');
         }
     }
 }

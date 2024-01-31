@@ -29,7 +29,7 @@ class CheckBox extends Component
     protected function checkboxFactory($id, $value)
     {
         $checkbox = new Tag('input', $id);
-        $checkbox->att(['type' => 'checkbox', 'name' => $id, 'value' => $value]);
+        $checkbox->attributes(['type' => 'checkbox', 'name' => $id, 'value' => $value]);
         return $checkbox;
     }
 
@@ -37,7 +37,7 @@ class CheckBox extends Component
     {
         $checkBoxId = $this->getCheckbox()->getAttribute('id');
         if (!empty($_REQUEST[$checkBoxId]) && !is_array($_REQUEST[$checkBoxId])) {
-            $this->getCheckbox()->att('checked', 'checked');
+            $this->getCheckbox()->attribute('checked', 'checked');
         }
         if (strpos($this->getCheckbox()->name, '[') === false) {
             $this->add($this->hiddenFieldFactory($checkBoxId));
@@ -61,7 +61,7 @@ class CheckBox extends Component
     public function setDisabled($condition)
     {
         if ($condition) {
-            $this->getCheckbox()->att('disabled', 'disabled');
+            $this->getCheckbox()->attribute('disabled', 'disabled');
         }
         return $this;
     }

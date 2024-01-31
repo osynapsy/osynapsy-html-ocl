@@ -16,6 +16,6 @@ class Submit extends Button
     public function __construct($id, $label = '', $class = '')
     {
         parent::__construct($id, $label, $class);
-        $this->att('type', 'submit');
+        $this->attribute('type', 'submit');
     }
 }

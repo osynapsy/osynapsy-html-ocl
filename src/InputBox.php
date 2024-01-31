@@ -18,14 +18,14 @@ class InputBox extends Component
     public function __construct($type, $name, $id = null)
     {
         parent::__construct('input', $id);
-        $this->att('type', $type)
-             ->att('name', $name);
+        $this->attribute('type', $type)
+             ->attribute('name', $name);
     }
 
     protected function __build_extra__()
     {
         $value = $this->getGlobal($this->name, $_REQUEST);
-        $this->att('value', (empty($value) && $value != '0' ? $this->defaultValue : $value));
+        $this->attribute('value', (empty($value) && $value != '0' ? $this->defaultValue : $value));
     }
 
     public function setValue($value)

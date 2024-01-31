@@ -34,7 +34,7 @@ class ListUnordered extends Component
         foreach ($this->data as $rec) {
             $rec = array_values($rec);
             $this->add(new Tag($this->itemTag))
-                 ->att('data-value',$rec[0])
+                 ->attribute('data-value',$rec[0])
                  ->add($rec[1]);
         }
     }
@@ -47,7 +47,7 @@ class ListUnordered extends Component
 
     public function setHeight($px)
     {
-        $this->att('class','overflow-auto border-all',true);
+        $this->attribute('class','overflow-auto border-all',true);
         $this->style = 'height: '.$px.'px;';
         return $this;
     }

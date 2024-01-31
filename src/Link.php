@@ -25,12 +25,12 @@ class Link extends Component
 
     public function setHref($uri)
     {
-        $this->att('href', empty($uri) ? 'javascript:void(0);' : $uri);
+        $this->attribute('href', empty($uri) ? 'javascript:void(0);' : $uri);
     }
 
     public function appendToHref($uri)
     {
-        $currentUri = $this->att('href');
+        $currentUri = $this->attribute('href');
         $this->setHref($currentUri.$uri);
     }
 }

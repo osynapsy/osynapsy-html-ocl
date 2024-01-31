@@ -21,7 +21,7 @@ class Form extends Component
     public function __construct($id, $method = 'post')
     {
         parent::__construct('form', $id);
-        $this->att('name', $id)->att('method', $method);
+        $this->attribute('name', $id)->attribute('method', $method);
         $this->panel = $this->panelFactory($id);
     }
 
